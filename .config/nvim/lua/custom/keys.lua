@@ -139,6 +139,7 @@ local leader = {
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
     g = { "<cmd>Telescope git_files<cr>", "Find Git File" },
     r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+    o = { "<cmd>Telescope zoxide list<cr>", "Zoxide" },
     m = { "<cmd>Telescope man_pages<cr>", "Find Man Page" },
     n = { "<cmd>enew<cr>", "New File" },
     z = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current Buffer Fuzzy" },

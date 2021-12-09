@@ -1,5 +1,5 @@
 local overrides = require("core.hooks").createOverrides "lsp"
-print("executing the stock lspconfig")
+
 local function on_attach(_, bufnr)
    local function buf_set_keymap(...)
       vim.api.nvim_buf_set_keymap(bufnr, ...)

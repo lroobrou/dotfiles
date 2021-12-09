@@ -146,9 +146,6 @@ hooks.add("install_plugins", function(use)
   use {
     'nvim-treesitter/playground',
     event = "BufRead",
-    config = function()
-      print("initializing treesitter playground")
-    end
   }
 
   -- Dabomb
@@ -260,6 +257,14 @@ hooks.add("install_plugins", function(use)
           }
         }
       }
+    end
+  }
+
+  use {
+    'jvgrootveld/telescope-zoxide',
+    event = "BufRead",
+    config = function() 
+      require'telescope'.load_extension('zoxide')
     end
   }
 

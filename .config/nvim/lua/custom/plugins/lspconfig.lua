@@ -1,6 +1,5 @@
 local M = {}
 
-print("executing my own lspconfig")
 M.setup_lsp = function(attach, capabilities)
   local lspconfig = require "lspconfig"
 

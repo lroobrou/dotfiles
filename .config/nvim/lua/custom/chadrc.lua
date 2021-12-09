@@ -53,6 +53,7 @@ M.plugins = {
     -- nvim_treesitter = "custom.plugins.treesitter_empty"
     nvim_treesitter = "custom.plugins.treesitter",
     feline = "custom.plugins.statusline",
+    dashboard = "custom.plugins.dashboard",
   },
 }
 
