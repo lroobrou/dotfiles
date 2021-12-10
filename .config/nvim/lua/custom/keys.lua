@@ -219,6 +219,11 @@ local leader = {
     m = { "<cmd>Telescope marks<cr>", "Jump to Mark" },
     r = { "<cmd>lua require('spectre').open()<CR>", "Replace (Spectre)" },
   },
+  S = {
+    name = "+session",
+    l = { "<cmd>SessionLoad<CR>", "Load Session" },
+    s = { "<cmd>SessionSave<CR>", "Save Session" },
+  },
   o = {
     name = "+open",
     p = { "<cmd>MarkdownPreview<cr>", "Markdown Preview" },
