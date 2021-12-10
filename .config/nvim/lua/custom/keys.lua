@@ -131,7 +131,7 @@ local leader = {
     name = "+file/find",
     a = { "<cmd>Telescope autocommands<cr>", "Find Autocommands" },
     b = { "<cmd>Telescope file_browser<cr>", "File Browser" },
-    d = { "<cmd>lua require('telescope.builtin').find_files({cwd='~/.config'})<cr>", "Dotfiles" },
+    d = { "<cmd>lua require('custom.dotfilepicker').find_files()<cr>", "Dotfiles" },
     D = { "<cmd>lua require('telescope.builtin').find_files({hidden=true,cwd='~/.config'})<cr>", "All Dotfiles" },
     c = { "<cmd>Telescope commands<cr>", "Find Commands" },
     s = { "<cmd>write<cr>", "Save File" },
