@@ -663,7 +663,7 @@ if !exists("g:loaded_vimrc")
     else
         "silent! colo seoul256
         " colorscheme gruvbox
-        colorscheme gruvbox
+        colorscheme onedark
         set background=dark
     endif
 endif

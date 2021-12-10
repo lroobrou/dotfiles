@@ -15,9 +15,9 @@ M.options, M.ui, M.mappings, M.plugins = {}, {}, {}, {}
 --    relativenumber = true,
 -- }
 
--- M.ui = {
---   theme = "nord"
--- }
+ M.ui = {
+   theme = "tokyonight"
+ }
 
 -- NvChad included plugin options & overrides
 M.plugins = {
@@ -27,7 +27,7 @@ M.plugins = {
       colorizer = false, -- color RGB, HEX, CSS, NAME color codes
       comment = true, -- easily (un)comment code, language aware
       dashboard = true, -- NeoVim 'home screen' on open
-      esc_insertmode = true, -- map to <ESC> with no lag
+      esc_insertmode = false, -- map to <ESC> with no lag
       feline = true, -- statusline
       gitsigns = true, -- gitsigns in statusline
       lspsignature = true, -- lsp enhancements
