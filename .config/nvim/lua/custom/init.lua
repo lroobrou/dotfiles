@@ -83,31 +83,26 @@ hooks.add("install_plugins", function(use)
   }
 
   use {
-      'tzachar/cmp-tabnine',
-      run='./install.sh',
-      requires = "nvim-cmp",
-      after = "nvim-cmp",
-      config = function()
-        require'cmp'.setup {
-          sources = {
-            { name = 'cmp_tabnine' },
-          },
-        }
-
-        local tabnine = require('cmp_tabnine.config')
-        tabnine:setup({
-          max_lines = 1000;
-          max_num_results = 20;
-          sort = true;
-          run_on_every_keystroke = true;
-          snippet_placeholder = '..';
-          ignored_file_types = { -- default is not to ignore
+    'tzachar/cmp-tabnine',
+    run='./install.sh',
+    requires = "nvim-cmp",
+    after = "nvim-cmp",
+    config = function()
+      local tabnine = require('cmp_tabnine.config')
+      tabnine:setup({
+        max_lines = 1000;
+        max_num_results = 20;
+        sort = true;
+        run_on_every_keystroke = true;
+        snippet_placeholder = '..';
+        ignored_file_types = {
+          -- default is not to ignore
           -- uncomment to ignore in lua:
           -- lua = true
         };
       })
-      end,
-      }
+    end,
+  }
 
   use {
     "b3nj5m1n/kommentary",
@@ -136,6 +131,24 @@ hooks.add("install_plugins", function(use)
 
       lsp_installer.on_server_ready(function(server)
         local opts = {}
+
+        if server.name == "sumneko_lua" then
+          opts.settings = {
+            Lua = {
+              runtime = { version = 'LuaJIT', },
+              diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+              },
+              workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+              },
+              -- Do not send telemetry data containing a randomized but unique identifier
+              telemetry = { enable = false, },
+            },
+          }
+        end
 
         server:setup(opts)
         vim.cmd [[ do User LspAttachBuffers ]]
