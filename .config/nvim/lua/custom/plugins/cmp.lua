@@ -4,11 +4,7 @@ if not present then
    return
 end
 
---[[ local lspkind = require("lspkind")
-lspkind.setup() ]]
-
 vim.opt.completeopt = "menuone,noselect"
-print("exec custom")
 
 -- nvim-cmp setup
 cmp.setup {
