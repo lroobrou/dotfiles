@@ -84,9 +84,9 @@ endif
 silent! if plug#begin(s:vim_plugged_dir)
 
 if s:darwin
-  " let g:plug_url_format = 'git@github.com:%s.git'
+    " let g:plug_url_format = 'git@github.com:%s.git'
 else
-  " let $git_ssl_no_verify = 'true'
+    " let $git_ssl_no_verify = 'true'
 endif
 
 " Plug 'prabirshrestha/async.vim'
@@ -103,65 +103,13 @@ endif
 " Plug 'jceb/vim-orgmode'
 Plug 'airblade/vim-gitgutter'
 
-" airline, status bar
-if !exists('g:started_by_firenvim')
-    Plug 'vim-airline/vim-airline'
-    let g:airline_powerline_fonts = 1
-endif
-"
 " junegunn Plugins
 Plug 'junegunn/vim-easy-align'
-" Plug 'junegunn/vim-fnr'
-" Plug 'junegunn/vim-peekaboo'
-" Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/fzf', { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'chengzeyi/fzf-preview.vim'
 
 Plug 'rust-lang/rust.vim'
-
-if has("nvim")
-    Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
-    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'glepnir/zephyr-nvim'
-
-lua <<EOF
-require("nvim-gps").setup()
-require('zephyr')
-require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim 
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        ["aa"] = "@parameter.outer",
-        ["ia"] = "@parameter.inner",
-
-        -- Or you can define your own textobjects like this
-        ["iF"] = {
-          python = "(function_definition) @function",
-          cpp = "(function_definition) @function",
-          c = "(function_definition) @function",
-          java = "(method_declaration) @function",
-        },
-      },
-    },
-  },
-}
-EOF
-endif
 
 " Colors
 " Plug 'alessandroyorba/despacio'
@@ -185,7 +133,6 @@ let g:gruvbox_contrast_dark = 'soft'
 
 " Tim Pope plugins
 Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
@@ -209,8 +156,8 @@ Plug 'gko/vim-coloresque'
 Plug 'mhinz/vim-grepper', { 'on': 'GrepperRg' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDtreeToggle' }
 Plug 'preservim/nerdcommenter'
+
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-" Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins', 'on': 'Denite' }
 let g:tagbar_sort = 0
 
 Plug 'roman/golden-ratio'
@@ -220,6 +167,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'liuchengxu/vim-which-key'
 Plug 'liuchengxu/vista.vim'
 
+" Slow :(
 " Plug 'ssh://luc@192.168.0.250/volume1/homes/luc/repos/pim'
 let g:pim_source_file = ""
 " let g:pim_source_file = ["~/.vim.py"]
@@ -228,8 +176,8 @@ Plug 'skywind3000/asyncrun.vim'
 
 Plug 'preservim/vimux'
 Plug 'jtdowney/vimux-cargo'
-" Navigate seemlessly in tmux
-Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'christoomey/vim-tmux-navigator' " Navigate seemlessly in tmux
 let g:tmux_navigator_no_mappings = 1
 
 nnoremap <silent> h :TmuxNavigateLeft<cr>
@@ -242,34 +190,7 @@ nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 
-" nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
-
 call plug#end()
-endif
-
-" }}}
-" ============================================================================
-" PATHOGEN {{{
-" ============================================================================
-
-if exists("xxxxxxxxxxx")
-    " To disable a plugin, add it's bundle name to the following list
-    let g:pathogen_disabled = []
-    if !has('win32') && has('gui_running')
-        call add(g:pathogen_disabled, 'youcompleteme')
-        call add(g:pathogen_disabled, 'completor.vim')
-    endif
-
-    if has('nvim')
-        call add(g:pathogen_disabled, 'completor.vim')
-    else
-        call add(g:pathogen_disabled, 'deoplete.nvim')
-    endif
-        call add(g:pathogen_disabled, 'YouCompleteMe') " Annoying DOS box pops up...
-        call add(g:pathogen_disabled, 'vim-grepper') " Really slow
-
-    execute pathogen#infect()
-    execute pathogen#helptags()
 endif
 
 " }}}
@@ -278,11 +199,8 @@ endif
 " ============================================================================
 
 filetype plugin indent on
-" show existing tab with 4 spaces width
 set tabstop=4
-" " when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" " On pressing tab, insert 4 spaces
 set expandtab smarttab
 set nocompatible
 set path+=**
@@ -291,9 +209,6 @@ set number
 set autoindent
 set smartindent
 set lazyredraw
-if !exists('g:started_by_firenvim')
-    set laststatus=2
-endif
 set showcmd
 set visualbell
 set belloff=all
@@ -358,31 +273,6 @@ if $TERM ==? 'xterm-kitty' || $TERM ==? 'xterm-256color'
   " background color.
   let &t_ut=''
   set termguicolors
-endif
-
-if exists('g:started_by_firenvim') && g:started_by_firenvim
-    " general options
-    set laststatus=0 nonumber noruler noshowcmd nomodeline
-
-    let g:firenvim_config = { 
-        \ 'globalSettings': {
-            \ 'alt': 'all',
-        \  },
-        \ 'localSettings': {
-            \ '.*': {
-                \ 'cmdline': 'neovim',
-                \ 'priority': 0,
-                \ 'selector': 'textarea',
-                \ 'takeover': 'never',
-            \ },
-        \ }
-    \ }
-    set guifont=monospace:h11
-
-    augroup firenvim
-        autocmd!
-        autocmd BufEnter *.txt setlocal filetype=markdown.pandoc
-    augroup END
 endif
 
 " }}}
@@ -668,10 +558,6 @@ if !exists("g:loaded_vimrc")
     endif
 endif
 
-if exists('g:started_by_firenvim')
-    colorscheme Tomorrow
-endif
-
 " }}}
 " ============================================================================
 " MAPPINGS {{{
@@ -845,9 +731,6 @@ nnoremap <Leader>tl :setlocal list!<cr>
 nnoremap <Leader>tt :Telescope<cr>
 nnoremap <Leader>tg :GoldenRatioToggle<cr>
 nnoremap <Leader>tv :Vista!!<cr>
-if has("nvim")
-    nnoremap <Leader>tc :CHADopen<cr>
-endif
 nnoremap <Leader>tb :let &background = &background == "dark" ? "light" : "dark"<bar>redraw<cr>
 nnoremap <Leader>tm :let &mouse = &mouse == "" ? "a" : ""<cr>
 nnoremap <Leader>tw :let &textwidth = input("textwidth (". &textwidth ."): ")<bar>redraw<cr>
@@ -897,129 +780,6 @@ let g:which_key_map.f = {
       \ }
 
 call which_key#register('<Space>', "g:which_key_map")
-
-" ----------------------------------------------------------------------------
-" nvim
-" ----------------------------------------------------------------------------
-if has('nvim') || s:darwin || !has('nvim')
-    " TextEdit might fail if hidden is not set.
-    set hidden
-
-    " Some servers have issues with backup files, see #649.
-    set nobackup
-    set nowritebackup
-
-    " Give more space for displaying messages.
-    set cmdheight=1
-
-    " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-    " delays and poor user experience.
-    set updatetime=300
-
-    " Don't pass messages to |ins-completion-menu|.
-    set shortmess+=c
-
-    " Always show the signcolumn, otherwise it would shift the text each time
-    " diagnostics appear/become resolved.
-    if has("patch-8.1.1564")
-        " Recently vim can merge signcolumn and number column into one
-        set signcolumn=number
-    else
-        set signcolumn=yes
-    endif
-
-    tnoremap <a-a> <esc>a
-    tnoremap <a-b> <esc>b
-    tnoremap <a-d> <esc>d
-    tnoremap <a-f> <esc>f
-
-    " Use tab for trigger completion with characters ahead and navigate.
-    " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-    " other plugin before putting this into your config.
-    inoremap <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    "imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-    "imap <expr><Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-
-    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-    " position. Coc only does snippet and additional edit on confirm.
-    " if exists('*complete_info')
-    " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-    " else
-    " imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-    " endif
-
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-
-    " Use `[g` and `]g` to navigate diagnostics
-    nmap <silent> [g <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-    " GoTo code navigation.
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
-    nmap <silent> gt :exe 'CocList -I --normal --input='.expand('<cword>').' symbols'<CR>
-
-    " Use K to show documentation in preview window.
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    function! s:show_documentation()
-        if (index(['vim','help'], &filetype) >= 0)
-            execute 'h '.expand('<cword>')
-        else
-            call CocAction('doHover')
-        endif
-    endfunction
-
-    " Symbol renaming.
-    nmap <Leader>li :CocInfo<cr>
-    nmap <Leader>la :CocAction<cr>
-    nmap <Leader>ll :CocList<cr>
-
-    nmap <Leader>lr <Plug>(coc-rename)
-    " Use `[g` and `]g` to navigate diagnostics
-    nmap <Leader>lp <Plug>(coc-diagnostic-prev)
-    nmap <Leader>ln <Plug>(coc-diagnostic-next)
-
-    " GoTo code navigation.
-    nmap <Leader>lgd <Plug>(coc-definition)
-    nmap <Leader>lgy <Plug>(coc-type-definition)
-    nmap <Leader>lgi <Plug>(coc-implementation)
-    nmap <Leader>lgr <Plug>(coc-references)
-
-    " Formatting selected code.
-    xmap <Leader>lf  <Plug>(coc-format-selected)
-    nmap <Leader>lf  <Plug>(coc-format-selected)
-
-    nmap <Leader>lb :Cbuild<CR>
-    nmap <Leader>lt :Ctest<CR>
-
-    let g:which_key_map.l = {
-                \ 'name' : '+lsp' ,
-                \ 'i' : 'coc-info',
-                \ 'a' : 'coc-action',
-                \ 'l' : 'coc-list',
-                \ 'r' : 'coc-rename',
-                \ 'n' : 'coc-diagnostic-next',
-                \ 'p' : 'coc-diagnostic-prev',
-                \ 'b' : 'build',
-                \ }
-
-endif
-
-" ----------------------------------------------------------------------------
-" <tab> / <s-tab> | Circular windows navigation
-" ----------------------------------------------------------------------------
-" nnoremap <Tab>   <C-W>w
-" nnoremap <S-Tab> <C-W>W
 
 " }}}
 " ============================================================================
