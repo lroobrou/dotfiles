@@ -112,22 +112,10 @@ Plug 'chengzeyi/fzf-preview.vim'
 Plug 'rust-lang/rust.vim'
 
 " Colors
-" Plug 'alessandroyorba/despacio'
-" Plug 'altercation/vim-colors-solarized'
-" Plug 'arcticicestudio/nord-vim'
 Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
-" Plug 'chriskempson/vim-tomorrow-theme'
-" Plug 'cocopon/iceberg.vim'
-" Plug 'nightsense/cosmic_latte'
-" Plug 'nightsense/snow'
-" Plug 'nightsense/stellarized'
+" Plug 'arcticicestudio/nord-vim'
 " Plug 'tomasr/molokai'
-" Plug 'tyrannicaltoucan/vim-deep-space'
-" Plug 'w0ng/vim-hybrid'
-" Plug 'yuttie/hydrangea-vim'
-" Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses'}
-" Plug 'ulwlu/elly.vim'
 
 let g:gruvbox_contrast_dark = 'soft'
 
@@ -558,6 +546,10 @@ if !exists("g:loaded_vimrc")
     endif
 endif
 
+if exists('g:started_by_firenvim')
+    colorscheme Tomorrow
+endif
+
 " }}}
 " ============================================================================
 " MAPPINGS {{{
@@ -731,6 +723,9 @@ nnoremap <Leader>tl :setlocal list!<cr>
 nnoremap <Leader>tt :Telescope<cr>
 nnoremap <Leader>tg :GoldenRatioToggle<cr>
 nnoremap <Leader>tv :Vista!!<cr>
+if has("nvim")
+    nnoremap <Leader>tc :CHADopen<cr>
+endif
 nnoremap <Leader>tb :let &background = &background == "dark" ? "light" : "dark"<bar>redraw<cr>
 nnoremap <Leader>tm :let &mouse = &mouse == "" ? "a" : ""<cr>
 nnoremap <Leader>tw :let &textwidth = input("textwidth (". &textwidth ."): ")<bar>redraw<cr>
