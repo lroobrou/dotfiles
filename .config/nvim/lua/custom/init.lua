@@ -154,10 +154,12 @@ hooks.add("install_plugins", function(use)
         vim.cmd [[ do User LspAttachBuffers ]]
       end)
     end,
-cust   }
+    -- cust
+  }
 
   use {
     "glepnir/lspsaga.nvim",
+    disable = true,
     config = function()
       local saga = require 'lspsaga'
       saga.init_lsp_saga()
@@ -312,7 +314,6 @@ hooks.add("ready", function(use)
   -- vim.opts.listchars:
   vim.cmd [[
   set listchars=tab:→\ ,eol:↲,nbsp:␣,space:•,trail:◼,extends:❯,precedes:❮
-  command! Chomp %s/\s\+$// | normal! ``
   ]]
 
   -- local colors = require("colors").get("tokyonight")
@@ -323,6 +324,22 @@ hooks.add("ready", function(use)
   -- fg("DiffDelete", colors.grey_fg)
   vim.cmd [[
   hi DiffDelete gui=bold guifg=#606060
+  ]]
+
+  -- Set some more options
+  vim.o.wrap = false
+  vim.o.scrolloff = 3
+
+  vim.cmd [[
+  " ----------------------------------------------------------------------------
+  " :Chomp
+  " ----------------------------------------------------------------------------
+  command! Chomp %s/\s\+$// | normal! ``
+
+  " ----------------------------------------------------------------------------
+  " :Count
+  " ----------------------------------------------------------------------------
+  command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
   ]]
 end)
 -- alternatively, put this in a sub-folder like "lua/custom/plugins/mkdir"

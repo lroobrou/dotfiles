@@ -106,8 +106,10 @@ M.mappings = {
 M.mappings.plugins = {
    -- list open buffers up the top, easy switching too
    bufferline = {
-      next_buffer = "<TAB>", -- next buffer
-      prev_buffer = "<S-Tab>", -- previous buffer
+      next_buffer = "<leader>bn", -- next buffer
+      prev_buffer = "<leader>bp", -- previous buffer
+      --[[ next_buffer = "<TAB>", -- next buffer
+      prev_buffer = "<S-Tab>", -- previous buffer ]]
    },
    -- easily (un)comment code, language aware
    comment = {
