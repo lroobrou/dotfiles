@@ -28,6 +28,7 @@ cmp.setup {
             luasnip = "[snip]",
             nvim_lsp = "[LSP]",
             nvim_lua = "[Lua]",
+            orgmode = "[Org]",
             path = "[path]",
          })[entry.source.name]
 
@@ -69,12 +70,13 @@ cmp.setup {
       end,
    },
    sources = {
-      { name = "nvim_lsp" },
-      { name = "luasnip" },
       { name = "buffer" },
-      { name = "nvim_lua" },
-      { name = "path" },
       { name = "cmp_tabnine" },
+      { name = "luasnip" },
+      { name = "nvim_lsp" },
+      { name = "nvim_lua" },
+      { name = "orgmode" },
+      { name = "path" },
    },
    experimental = {
      -- I like the new menu better! Nice work hrsh7th

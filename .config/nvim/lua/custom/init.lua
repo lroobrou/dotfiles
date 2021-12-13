@@ -2,8 +2,8 @@
 -- This is where your custom modules and plugins go.
 -- See the wiki for a guide on how to extend NvChad
 
-local hooks = require "core.hooks"
-local util = require "custom.util"
+local hooks = require("core.hooks")
+-- local util = require("custom.util")
 
 -- NOTE: To use this, make a copy with `cp example_init.lua init.lua`
 
@@ -157,6 +157,14 @@ hooks.add("install_plugins", function(use)
   }
 
   use {
+    "glepnir/lspsaga.nvim",
+    config = function()
+      local saga = require 'lspsaga'
+      saga.init_lsp_saga()
+    end,
+  }
+
+  use {
     'nvim-treesitter/playground',
     event = "BufRead",
   }
@@ -185,7 +193,22 @@ hooks.add("install_plugins", function(use)
     after = "nvim-treesitter",
     config = function()
       require('orgmode').setup{}
-    end
+    end,
+    requires = {
+      {
+        "akinsho/org-bullets.nvim",
+        config = function()
+          require("org-bullets").setup {
+            symbols = { "◉", "○", "✸", "✿" }
+            -- or a function that receives the defaults and returns a list
+            --[[ symbols = function(default_list)
+              table.insert(default_list, "♥")
+              return default_list
+            end ]]
+          }
+        end
+      }
+    }
   }
 
   -- still need to configure this one, I have disabled it for now.
@@ -254,7 +277,6 @@ hooks.add("install_plugins", function(use)
     requires = 'nvim-lua/plenary.nvim',
     config = function()
       vim.opt.fillchars = "diff:╱"
-      -- vim.cmd [[ hi DiffDelete gui=bold guifg=#606060 ]]
       require'diffview'.setup
       {
         key_bindings = {
@@ -270,24 +292,45 @@ hooks.add("install_plugins", function(use)
           }
         }
       }
+      -- Doesn't work, unfortunately, seems to be set somewhere afterwards.
+      vim.cmd [[ hi DiffDelete gui=bold guifg=#606060 ]]
     end
   }
 
   use {
     'jvgrootveld/telescope-zoxide',
     event = "BufRead",
-    config = function() 
+    config = function()
       require'telescope'.load_extension('zoxide')
     end
   }
 
+  use "kg8m/vim-simple-align"
 end)
 
--- vim.opts.listchars:
-vim.cmd [[
-set listchars=tab:→\ ,eol:↲,nbsp:␣,space:•,trail:◼,extends:❯,precedes:❮
-]]
+hooks.add("install_plugins", function(use)
+  -- vim.opts.listchars:
+  vim.cmd [[
+  set listchars=tab:→\ ,eol:↲,nbsp:␣,space:•,trail:◼,extends:❯,precedes:❮
+  command! Chomp %s/\s\+$// | normal! ``
+  ]]
+
+  local colors = require("colors").get("tokyonight")
+  local fg = require("core.utils").fg
+  --local fg_bg = require("core.utils").fg_bg
+  --local bg = require("core.utils").bg ]]
+  --
+  fg("DiffDelete", colors.grey_fg)
+  vim.cmd [[
+  hi DiffDelete gui=bold guifg=#606060
+  ]]
+end)
 -- alternatively, put this in a sub-folder like "lua/custom/plugins/mkdir"
 -- then source it with
 
 -- require "custom.plugins.mkdir"
+
+-- ----------------------------------------------------------------------------
+-- :Chomp
+-- ----------------------------------------------------------------------------
+
