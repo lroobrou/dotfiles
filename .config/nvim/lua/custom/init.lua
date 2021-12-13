@@ -154,7 +154,7 @@ hooks.add("install_plugins", function(use)
         vim.cmd [[ do User LspAttachBuffers ]]
       end)
     end,
-  }
+cust   }
 
   use {
     "glepnir/lspsaga.nvim",
@@ -308,19 +308,19 @@ hooks.add("install_plugins", function(use)
   use "kg8m/vim-simple-align"
 end)
 
-hooks.add("install_plugins", function(use)
+hooks.add("ready", function(use)
   -- vim.opts.listchars:
   vim.cmd [[
   set listchars=tab:→\ ,eol:↲,nbsp:␣,space:•,trail:◼,extends:❯,precedes:❮
   command! Chomp %s/\s\+$// | normal! ``
   ]]
 
-  local colors = require("colors").get("tokyonight")
-  local fg = require("core.utils").fg
+  -- local colors = require("colors").get("tokyonight")
+  -- local fg = require("core.utils").fg
   --local fg_bg = require("core.utils").fg_bg
   --local bg = require("core.utils").bg ]]
   --
-  fg("DiffDelete", colors.grey_fg)
+  -- fg("DiffDelete", colors.grey_fg)
   vim.cmd [[
   hi DiffDelete gui=bold guifg=#606060
   ]]
