@@ -54,7 +54,12 @@ end)
 -- examples below:
 
 hooks.add("install_plugins", function(use)
-  use 'folke/tokyonight.nvim'
+  use {
+    'folke/tokyonight.nvim',
+    config = function()
+      vim.g.tokyonight_style = 'night'
+    end
+  }
 
   use 'tpope/vim-repeat'
 
@@ -104,7 +109,7 @@ hooks.add("install_plugins", function(use)
     end,
   }
 
-  use {
+  --[[ use {
     "b3nj5m1n/kommentary",
     event = "BufRead",
     config = function()
@@ -112,14 +117,70 @@ hooks.add("install_plugins", function(use)
         prefer_multi_line_comments = true,
       })
     end
+  } ]]
+
+  use {
+    'numToStr/Comment.nvim',
+    after = "which-key.nvim",
+    config = function()
+      require('Comment').setup()
+      local wk = require("which-key")
+      local comment_map =
+      {
+        c = {
+          name = "Comments",
+          o = "Open Comment",
+          c = "Comment Lines",
+          A = "Open Comment End of Line",
+          O = "Open Comment Before",
+        },
+        b = {
+          name = "Block Comments",
+          c = "Comment Lines",
+        },
+      }
+      wk.register(comment_map, { mode = "n", prefix = "g" })
+    end
   }
 
   use {
     "folke/which-key.nvim",
     event = "VimEnter",
     config = function()
-      require("which-key").setup {}
-      require("custom.keys")
+      require("which-key").setup {
+        plugins = {
+          marks = true, -- shows a list of your marks on ' and `
+          registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+          spelling = {
+            enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+            suggestions = 20, -- how many suggestions should be shown in the list?
+          },
+          -- the presets plugin, adds help for a bunch of default keybindings in Neovim
+          -- No actual key bindings are created
+          presets = {
+            operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+            motions = true, -- adds help for motions
+            text_objects = false, -- help for text objects triggered after entering an operator
+            windows = true, -- default bindings on <c-w>
+            nav = true, -- misc bindings to work with windows
+            z = true, -- bindings for folds, spelling and others prefixed with z
+            g = true, -- bindings for prefixed with g
+          },
+        },
+      }
+      require("custom.keys").setup()
+    end
+  }
+
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
     end
   }
 
@@ -128,10 +189,21 @@ hooks.add("install_plugins", function(use)
     event = "BufRead",
     config = function()
       local lsp_installer = require "nvim-lsp-installer"
+      lsp_installer.settings({
+        ui = {
+          icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+          }
+        }
+      })
 
       lsp_installer.on_server_ready(function(server)
         local opts = {}
+        -- print("calling on server ready for server: " .. server.name)
 
+        -- set the lua lsp to work nice with nvim Lua.
         if server.name == "sumneko_lua" then
           opts.settings = {
             Lua = {
@@ -240,10 +312,10 @@ hooks.add("install_plugins", function(use)
 
   use {
     "simrat39/rust-tools.nvim",
-    disable = true,
-    event = "BufRead *.rs",
+    -- disable = true,
+    -- event = "BufRead *.rs",
     after = "nvim-lspconfig",
-    opt = true,
+    -- opt = true,
     config = function()
       require('rust-tools').setup({})
     end
@@ -310,7 +382,7 @@ hooks.add("install_plugins", function(use)
   use "kg8m/vim-simple-align"
 end)
 
-hooks.add("ready", function(use)
+hooks.add("ready", function()
   -- vim.opts.listchars:
   vim.cmd [[
   set listchars=tab:→\ ,eol:↲,nbsp:␣,space:•,trail:◼,extends:❯,precedes:❮
@@ -329,6 +401,7 @@ hooks.add("ready", function(use)
   -- Set some more options
   vim.o.wrap = false
   vim.o.scrolloff = 3
+  vim.o.relativenumber = true
 
   vim.cmd [[
   " ----------------------------------------------------------------------------
