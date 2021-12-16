@@ -1,7 +1,6 @@
 local M = {}
 
 M.setup_lsp = function(attach, capabilities)
-   print ("calling setup_lsp")
   local lspconfig = require "lspconfig"
 
   -- lspservers with default config

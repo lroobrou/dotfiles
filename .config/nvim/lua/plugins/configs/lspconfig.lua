@@ -1,7 +1,6 @@
 local overrides = require("core.hooks").createOverrides "lsp"
 
 local function on_attach(_, bufnr)
-   print ("calling on_attach for buffer " .. bufnr)
    local function buf_set_keymap(...)
       vim.api.nvim_buf_set_keymap(bufnr, ...)
    end
