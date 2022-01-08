@@ -253,8 +253,12 @@ fi
 # | FZF completions |
 # +-----------------+
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+# source /usr/share/fzf/key-bindings.zsh
+
+ZSH_FZF="$ZDOTDIR/fzf.zsh"
+source $ZSH_FZF
 
 # Quick edit
 vzv() {
