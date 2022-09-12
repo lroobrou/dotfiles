@@ -165,6 +165,11 @@ alias df="df -h"
 alias ta="tmux attach"
 alias jo="joshuto"
 
+# alternative vim configs
+alias nvimc="XDG_CONFIG_HOME=~/nvim-config XDG_DATA_HOME=~/nvim-config/share nvim"
+alias nvchad="XDG_CONFIG_HOME=~/nvchad XDG_DATA_HOME=~/nvchad/share nvim"
+# alias nvim="XDG_CONFIG_HOME=~/nvchad XDG_DATA_HOME=~/nvchad/share nvim"
+
 # https://www.atlassian.com/git/tutorials/dotfiles
 alias config='git --git-dir=$HOME/.cfg --work-tree=$HOME'
 
@@ -174,8 +179,8 @@ for index ({1..9}) alias "d$index"="cd +${index}"; unset index
 # | key bindings |
 # +--------------+
 
-# bindkey -e
-bindkey -v
+bindkey -e
+# bindkey -v
 
 # zsource_ifexists /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.zsh
 
@@ -322,7 +327,8 @@ source $ZDOTDIR/command-not-found.plugin.zsh
 # reinitializes the keymap. => we set it again in the
 # zvm_after_init hook.
 # check out: https://github.com/jeffreytse/zsh-vi-mode
-zsource_ifexists /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.zsh
+# zsource_ifexists /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.zsh
+
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 
 # +-----------------------------+

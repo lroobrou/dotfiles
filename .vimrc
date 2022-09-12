@@ -377,7 +377,7 @@ function! SnapShotFormat()
     let aft = ""
     let aft = aft . "   UPDATE OmTxLog SET TxEnd = SYSDATE WHERE ObjectName ='STEP' AND SID = Sequence AND TxType = 'CHANGE' AND TxStart = TXStart;\n"
     let aft = aft . "   COMMIT;\n"
-    let aft = aft . "END;\n"
+      let aft = aft . "END;\n"
     let aft = aft . "/\n"
 
     set nocompatible

@@ -242,8 +242,8 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 # Load the openweather config
-with open('/home/luc/.openweather', 'r') as f:
-    openweather = json.loads(f.read())
+# with open('/home/luc/.openweather', 'r') as f:
+#     openweather = json.loads(f.read())
 
 screens = [
     Screen(
@@ -274,9 +274,9 @@ screens = [
                 widget.CurrentLayoutIcon(scale=0.6),
                 widget.CurrentLayout(width=77),
                 widget.Sep(),
-                widget.OpenWeather(
-                    app_key=openweather['key'],
-                    cityid=openweather['city']),
+                # widget.OpenWeather(
+                #     app_key=openweather['key'],
+                #     cityid=openweather['city']),
                 widget.Sep(),
                 # widget.NetGraph(border_width=1,
                 #                 line_width=4,
@@ -327,7 +327,6 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
-main = None  # WARNING: this is deprecated and will be removed soon
 follow_mouse_focus = False
 bring_front_click = False
 cursor_warp = False
