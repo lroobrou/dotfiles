@@ -22,7 +22,7 @@ pidof -q xscreensaver || xscreensaver --no-splash &
 
 pidof -q xsettingsd || xsettingsd &
 
-# Keyboars layout applet
+# Keyboard layout applet
 pidof -q gxkb || gxkb &
 
 # see man xkeyboard-config

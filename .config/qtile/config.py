@@ -40,18 +40,22 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+
 class commands:
     """Command to run in various places in this config file."""
     autostart = os.path.join(os.path.dirname(__file__), 'autostart.sh')
+
 
 @hook.subscribe.startup
 def autostart():
     home = 'notify-send "QTile started"'
     subprocess.call([home])
 
+
 @hook.subscribe.startup
 def autostart_once():
     subprocess.call(commands.autostart)
+
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -141,7 +145,7 @@ groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = ["", "", "", "", "", "", "", "", "9"]
 group_layouts = ["monadtall", "tile", "monadtall", "monadtall", "monadtall",
-        "monadtall", "monadtall", "monadtall", "monadtall"]
+                 "monadtall", "monadtall", "monadtall", "monadtall"]
 
 for (i, g) in enumerate(group_names):
     groups.append(
@@ -150,8 +154,6 @@ for (i, g) in enumerate(group_names):
             layout=group_layouts[i].lower(),
             label=group_labels[i],
         ))
-
-
 
 for i in groups:
     keys.extend([
@@ -168,16 +170,17 @@ for i in groups:
         #     desc="move focused window to group {}".format(i.name)),
     ])
 
-class colors: # pylint: disable=too-few-public-methods
+class colors:  # pylint: disable=too-few-public-methods
     """Definition of colors, grouped together in a class."""
-    accent1="C6D729"          # lime
-    accent1_inverse="000000"  # text showing on accent1 background
-    # accent2="1D2330"
-    # accent2="EDC9AF"
-    # accent2="3A29D7"
-    # accent2="00A693"
+    accent1 = "C6D729"          # lime
+    accent1_inverse = "000000"  # text showing on accent1 background
+    # accent2 = "1D2330"
+    # accent2 = "EDC9AF"
+    # accent2 = "3A29D7"
+    # accent2 = "00A693"
     # accent2 = "5A2FD1"
     accent2 = "2FD1AB"
+
 
 layout_theme = dict(
         border_width=1,
@@ -187,15 +190,18 @@ layout_theme = dict(
         border_normal="1D2330",
         )
 
+
 # MonadTall, with a small modification.
 class MonadTall(layout.MonadTall):
     """Fixes the reset functionality, which the stock Monad Tall doesn't handle correctly."""
+
     def __init__(self, **config):
         layout.MonadTall.__init__(self, **config)
         if "ratio" in config:
             self._med_ratio = config["ratio"]
         else:
             self._med_ratio = 0.618033989
+
 
 layouts = [
     layout.Columns(border_focus_stack='#d75f5f',
@@ -206,12 +212,12 @@ layouts = [
     # layout.Bsp(),
     # layout.Matrix(),
     MonadTall(ratio=0.618033989,
-             min_ratio = 0.5,
-             max_ratio=0.75,
-             change_ratio=0.01,
-             single_margin=0,
-             single_border_width=0,
-             **layout_theme),
+              min_ratio=0.5,
+              max_ratio=0.75,
+              change_ratio=0.01,
+              single_margin=0,
+              single_border_width=0,
+              **layout_theme),
     # layout.MonadTall(ratio=0.618033989,
     #                  min_ratio = 0.5,
     #                  max_ratio=0.75,
@@ -250,15 +256,15 @@ screens = [
         top=bar.Bar(
             [
                 widget.Sep(
-                    linewidth = 0,
+                    linewidth=0,
                     # padding = 6,
                     # foreground = colors[2],
                     # background = colors[0]
                     ),
                 widget.Image(
-                    filename = "~/.config/qtile/icons/python.png",
-                    scale = "False",
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("jgmenu_run")}
+                    filename="~/.config/qtile/icons/python.png",
+                    scale="False",
+                    mouse_callbacks={'Button1': lambda: qtile.cmd_spawn("jgmenu_run")}
                     ),
                 widget.GroupBox(
                     borderwidth=1,
@@ -303,7 +309,7 @@ screens = [
                                 type='box'),
                 widget.Sep(),
                 widget.Systray(),
-                                # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+                # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
                 widget.Sep(),
                 widget.Clock(format='%d/%m %a %H:%M'),
                 # widget.QuickExit(),

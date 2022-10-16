@@ -285,6 +285,7 @@ fi
 # +--------+
 # | Zoxide |
 # +--------+
+
 if command -v zoxide > /dev/null; then
     eval "$(zoxide init zsh)"
 else
@@ -315,8 +316,7 @@ fi
 #                /____/                    
 
 # command not found
-source $ZDOTDIR/command-not-found.plugin.zsh
-
+# source $ZDOTDIR/command-not-found.plugin.zsh
 
 # +-------------+
 # | zsh-vi-mode |
