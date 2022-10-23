@@ -1,0 +1,56 @@
+#!/bin/sh
+
+#                               _     ____   
+#    ______      ______ ___  __(_)___/ / /__ 
+#   / ___/ | /| / / __ `/ / / / / __  / / _ \
+#  (__  )| |/ |/ / /_/ / /_/ / / /_/ / /  __/
+# /____/ |__/|__/\__,_/\__, /_/\__,_/_/\___/ 
+#                     /____/                 
+#
+#                      __  _              
+#    _______  ______  / /_(_)___ ___  ___ 
+#   / ___/ / / / __ \/ __/ / __ `__ \/ _ \
+#  / /  / /_/ / / / / /_/ / / / / / /  __/
+# /_/   \__,_/_/ /_/\__/_/_/ /_/ /_/\___/ 
+#                                         
+
+BACKGROUND="/home/luc/Pictures/lights_car_dark_128635_1920x1080.jpg"
+lockscreen="swaylock -i \"$BACKGROUND\""
+
+echo "$lockscreen"
+
+dim_timeout=200
+lock_timeout=$((dim_timeout + 10))
+dps_timeout=$((lock_timeout + 60))
+suspend_timeout=$((dps_timeout + 60))
+
+idle_pid=
+
+start_swayidle() {
+    swayidle -w \
+        timeout $dim_timeout 'swayidle-inhibit || brightnessctl --save set 10%' \
+            resume "brightnessctl --restore" \
+        timeout $lock_timeout "swayidle-inhibit --ignore-ac || $lockscreen" \
+        timeout $dps_timeout 'swayidle-inhibit || swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"' \
+        timeout $suspend_timeout "swayidle-inhibit || { swaymsg 'output * dpms on'; brightnessctl --restore; systemctl suspend; }" \
+        before-sleep "$lockscreen" \
+        lock "$lockscreen" &
+    idle_pid=$!
+}
+
+start_swayidle
+
+# If something changed to (or to cease) inhibit locking, ie laptop (dis)connected from AC, reset the timeouts
+inhibit_status=$(swayidle-inhibit; printf '%s\n' $?)
+while true; do
+    new_inhibit_status=$(swayidle-inhibit; printf '%s\n' $?)
+    if [ "$new_inhibit_status" != "$inhibit_status" ]; then
+        notify-send "Inhibited status changed to $new_inhibit_status."
+        kill $idle_pid
+        brightnessctl --restore
+        start_swayidle
+    fi
+    inhibit_status=$new_inhibit_status
+    sleep 1
+done

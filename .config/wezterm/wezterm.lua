@@ -1,14 +1,20 @@
+--                        __                    
+--   _      _____  ____  / /____  _________ ___ 
+--  | | /| / / _ \/_  / / __/ _ \/ ___/ __ `__ \
+--  | |/ |/ /  __/ / /_/ /_/  __/ /  / / / / / /
+--  |__/|__/\___/ /___/\__/\___/_/  /_/ /_/ /_/ 
+--                                              
 local wezterm = require("wezterm")
 local act = wezterm.action
 
 return {
 	enable_wayland = true,
 
-	--     __        __       __
-	--    / /_____ _/ /_     / /_  ____ ______
-	--   / __/ __ `/ __ \   / __ \/ __ `/ ___/
-	--  / /_/ /_/ / /_/ /  / /_/ / /_/ / /
-	--  \__/\__,_/_.___/  /_.___/\__,_/_/
+	--    __        __       __
+	--   / /_____ _/ /_     / /_  ____ ______
+	--  / __/ __ `/ __ \   / __ \/ __ `/ ___/
+	-- / /_/ /_/ / /_/ /  / /_/ / /_/ / /
+	-- \__/\__,_/_.___/  /_.___/\__,_/_/
 	--
 	use_fancy_tab_bar = false,
 	enable_tab_bar = true,
@@ -35,21 +41,6 @@ return {
 		inactive_titlebar_bg = "#333333",
 	},
 
-	colors = {
-		tab_bar = {
-			-- The color of the inactive tab bar edge/divider
-			inactive_tab_edge = "#575757",
-		},
-	},
-
-	inactive_pane_hsb = {
-		saturation = 0.7,
-		brightness = 0.6,
-	},
-
-	-- e.g. distinguish between tab and ctrl-i
-	enable_csi_u_key_encoding = true,
-
 	--               __                        __
 	--   _________  / /___  _____   __________/ /_  ___  ____ ___  ___
 	--  / ___/ __ \/ / __ \/ ___/  / ___/ ___/ __ \/ _ \/ __ `__ \/ _ \
@@ -62,8 +53,172 @@ return {
 	-- color_scheme = "FunForrest",
 	-- color_scheme = "Gruvbox Dark",
 	-- color_scheme = "HaX0R_R3D",
-	-- font = wezterm.font('JetBrains Mono', { weight = 'Bold' }),
-	-- font = wezterm.font("Hack"),
+
+	--               __
+	--   _________  / /___  __________
+	--  / ___/ __ \/ / __ \/ ___/ ___/
+	-- / /__/ /_/ / / /_/ / /  (__  )
+	-- \___/\____/_/\____/_/  /____/
+	--
+	colors = {
+		tab_bar = {
+			-- The color of the inactive tab bar edge/divider
+			-- inactive_tab_edge = "#575757",
+			-- The color of the strip that goes along the top of the window
+			-- (does not apply when fancy tab bar is in use)
+			-- background = "#0b0022",
+			background = "#141722",
+
+			-- The active tab is the one that has focus in the window
+			active_tab = {
+				-- The color of the background area for the tab
+				-- bg_color = "#2b2042",
+				bg_color = "#2e354f",
+				-- The color of the text for the tab
+				fg_color = "#c5c5c5",
+
+				-- Specify whether you want "Half", "Normal" or "Bold" intensity for the
+				-- label shown for this tab.
+				-- The default is "Normal"
+				intensity = "Bold",
+
+				-- Specify whether you want "None", "Single" or "Double" underline for
+				-- label shown for this tab.
+				-- The default is "None"
+				underline = "None",
+
+				-- Specify whether you want the text to be italic (true) or not (false)
+				-- for this tab.  The default is false.
+				italic = false,
+
+				-- Specify whether you want the text to be rendered with strikethrough (true)
+				-- or not for this tab.  The default is false.
+				strikethrough = false,
+			},
+
+			-- Inactive tabs are the tabs that do not have focus
+			inactive_tab = {
+				-- bg_color = "#1b1032",
+				bg_color = "#23283c",
+				fg_color = "#808080",
+			},
+
+			-- You can configure some alternate styling when the mouse pointer
+			-- moves over inactive tabs
+			inactive_tab_hover = {
+				-- bg_color = "#3b3052",
+				bg_color = "#343b59",
+				fg_color = "#909090",
+				italic = true,
+			},
+
+			-- The new tab button that let you create new tabs
+			new_tab = {
+				-- bg_color = "#1b1032",
+				bg_color = "#3c232c",
+				fg_color = "#808080",
+			},
+
+			-- You can configure some alternate styling when the mouse pointer
+			-- moves over the new tab button
+			new_tab_hover = {
+				-- bg_color = "#3b3052",
+				bg_color = "#56323f",
+				fg_color = "#909090",
+			},
+		},
+
+		--[[ 
+		-- The default text color
+		foreground = "silver",
+		-- The default background color
+		background = "black",
+
+		-- Overrides the cell background color when the current cell is occupied by the
+		-- cursor and the cursor style is set to Block
+		cursor_bg = "#52ad70",
+		-- Overrides the text color when the current cell is occupied by the cursor
+		cursor_fg = "black",
+		-- Specifies the border color of the cursor when the cursor style is set to Block,
+		-- or the color of the vertical or horizontal bar when the cursor style is set to
+		-- Bar or Underline.
+		cursor_border = "#52ad70",
+
+		-- the foreground color of selected text
+		selection_fg = "black",
+		-- the background color of selected text
+		selection_bg = "#fffacd",
+
+		-- The color of the scrollbar "thumb"; the portion that represents the current viewport
+		scrollbar_thumb = "#222222",
+
+		-- The color of the split lines between panes
+		split = "#444444",
+
+		ansi = {
+			"black",
+			"maroon",
+			"green",
+			"olive",
+			"navy",
+			"purple",
+			"teal",
+			"silver",
+		},
+		brights = {
+			"grey",
+			"red",
+			"lime",
+			"yellow",
+			"blue",
+			"fuchsia",
+			"aqua",
+			"white",
+		},
+
+		-- Arbitrary colors of the palette in the range from 16 to 255
+		indexed = { [136] = "#af8700" },
+
+		-- Since: 20220319-142410-0fcdea07
+		-- When the IME, a dead key or a leader key are being processed and are effectively
+		-- holding input pending the result of input composition, change the cursor
+		-- to this color to give a visual cue about the compose state.
+		compose_cursor = "orange",
+
+		-- Colors for copy_mode and quick_select
+		-- available since: 20220807-113146-c2fee766
+		-- In copy_mode, the color of the active text is:
+		-- 1. copy_mode_active_highlight_* if additional text was selected using the mouse
+		-- 2. selection_* otherwise
+		copy_mode_active_highlight_bg = { Color = "#000000" },
+		-- use `AnsiColor` to specify one of the ansi color palette values
+		-- (index 0-15) using one of the names "Black", "Maroon", "Green",
+		--  "Olive", "Navy", "Purple", "Teal", "Silver", "Grey", "Red", "Lime",
+		-- "Yellow", "Blue", "Fuchsia", "Aqua" or "White".
+		copy_mode_active_highlight_fg = { AnsiColor = "Black" },
+		copy_mode_inactive_highlight_bg = { Color = "#52ad70" },
+		copy_mode_inactive_highlight_fg = { AnsiColor = "White" },
+
+		quick_select_label_bg = { Color = "peru" },
+		quick_select_label_fg = { Color = "#ffffff" },
+		quick_select_match_bg = { AnsiColor = "Navy" },
+		quick_select_match_fg = { Color = "#ffffff" }, ]]
+	},
+
+	inactive_pane_hsb = {
+		saturation = 0.7,
+		brightness = 0.7,
+	},
+
+	quick_select_patterns = {
+		-- match things that look like sha1 hashes
+		-- (this is actually one of the default patterns)
+		"[0-9a-f]{7,40}",
+		"(color|window|enable)[a-z_]*",
+	},
+
+	-- e.g. distinguish between tab and ctrl-i
+	enable_csi_u_key_encoding = true,
 
 	--     ____            __
 	--    / __/___  ____  / /_
@@ -71,6 +226,8 @@ return {
 	--  / __/ /_/ / / / / /_
 	-- /_/  \____/_/ /_/\__/
 	--
+	-- font = wezterm.font('JetBrains Mono', { weight = 'Bold' }),
+	-- font = wezterm.font("Hack"),
 	font = wezterm.font("JetBrains Mono"),
 	font_size = 12,
 
@@ -135,7 +292,6 @@ return {
 		{ key = "Z", mods = "SHIFT|CTRL", action = act.TogglePaneZoomState },
 		{ key = "[", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(-1) },
 		{ key = "]", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(1) },
-		{ key = "_", mods = "SHIFT|CTRL", action = act.DecreaseFontSize },
 		{
 			key = "a",
 			mods = "LEADER",
@@ -175,23 +331,19 @@ return {
 			action = act.CharSelect({ copy_on_select = true, copy_to = "ClipboardAndPrimarySelection" }),
 		},
 		{ key = "v", mods = "SHIFT|CTRL", action = act.PasteFrom("Clipboard") },
-		{ key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
 		{ key = "w", mods = "SHIFT|CTRL", action = act.CloseCurrentTab({ confirm = true }) },
-		{ key = "w", mods = "SUPER", action = act.CloseCurrentTab({ confirm = true }) },
 		{ key = "x", mods = "SHIFT|CTRL", action = act.ActivateCopyMode },
 		{ key = "z", mods = "SHIFT|CTRL", action = act.TogglePaneZoomState },
-		{ key = "{", mods = "SUPER", action = act.ActivateTabRelative(-1) },
 		{ key = "{", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(-1) },
 		{ key = "|", mods = "SHIFT|LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-		{ key = "}", mods = "SUPER", action = act.ActivateTabRelative(1) },
 		{ key = "}", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(1) },
 		{ key = "phys:Space", mods = "SHIFT|CTRL", action = act.QuickSelect },
 		{ key = "PageUp", mods = "SHIFT", action = act.ScrollByPage(-1) },
 		{ key = "PageUp", mods = "CTRL", action = act.ActivateTabRelative(-1) },
-		{ key = "PageUp", mods = "SHIFT|SUPER", action = act.MoveTabRelative(-1) },
+		{ key = "PageUp", mods = "SHIFT|CTRL", action = act.MoveTabRelative(-1) },
 		{ key = "PageDown", mods = "SHIFT", action = act.ScrollByPage(1) },
 		{ key = "PageDown", mods = "CTRL", action = act.ActivateTabRelative(1) },
-		{ key = "PageDown", mods = "SHIFT|SUPER", action = act.MoveTabRelative(1) },
+		{ key = "PageDown", mods = "SHIFT|CTRL", action = act.MoveTabRelative(1) },
 		{ key = "LeftArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Left") },
 		{ key = "LeftArrow", mods = "SHIFT|ALT|CTRL", action = act.AdjustPaneSize({ "Left", 1 }) },
 		{ key = "RightArrow", mods = "SHIFT|CTRL", action = act.ActivatePaneDirection("Right") },

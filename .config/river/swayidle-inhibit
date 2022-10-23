@@ -1,0 +1,72 @@
+#!/bin/sh
+
+#                               _     ____           _       __    _ __    _ __ 
+#    ______      ______ ___  __(_)___/ / /__        (_)___  / /_  (_) /_  (_) /_
+#   / ___/ | /| / / __ `/ / / / / __  / / _ \______/ / __ \/ __ \/ / __ \/ / __/
+#  (__  )| |/ |/ / /_/ / /_/ / / /_/ / /  __/_____/ / / / / / / / / /_/ / / /_  
+# /____/ |__/|__/\__,_/\__, /_/\__,_/_/\___/     /_/_/ /_/_/ /_/_/_.___/_/\__/  
+#                     /____/                                                    
+#
+audio=false
+programs=false
+video=false
+all=true
+message=true
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+	--audio)
+		audio=true
+		all=false
+		;;
+	--programs)
+		programs=true
+		all=false
+		;;
+	--video)
+		video=true
+		all=false
+		;;
+	-v)
+		message=true
+		;;
+	esac
+	shift
+done
+
+message() {
+  notify-send -t 1500 "$1"
+}
+
+if [ $message = true ]; then
+	echo "Inhibit: $all, $video, $audio, $programs"
+fi
+
+if [ $video = true ] || [ $all = true ]; then
+	# For firefox, totem, vlc... video players -> inhibit locking and dimming.
+	playerctl status -a | grep Playing 1>/dev/null 2>/dev/null && {
+		message "video playback detected."
+		exit 0
+	}
+fi
+
+if [ $audio = true ] || [ $all = true ]; then
+	# Mpc playing -> inhibit locking, not dimming.
+	mpc 2>/dev/null | grep playing 1>/dev/null 2>/dev/null && {
+    message "audio playback detected."
+    exit 0
+  }
+fi
+
+# Check for certain programs that are running during which we don't want to lock.
+# convert.sh shell script -> inhibit locking, not dimming.
+if [ $programs = true ] || [ $all = true ]; then
+	pgrep -u "$USER" "convert.sh" && {
+    message "program running detected."
+    exit 0
+  }
+fi
+
+# Do not inhibit locking.
+message "we can lock..."
+exit 1

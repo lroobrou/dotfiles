@@ -1,0 +1,22 @@
+#!/bin/sh
+
+CHOICE=$(tofi <<EOF
+left
+top
+right
+bottom
+horizontal
+vertical
+gridv
+gridh
+fibonacci
+monocle
+EOF
+)
+
+if [[ "$?" -eq 0 ]]; then
+  echo "$?" $CHOICE
+  if [[ "$CHOICE" != "" ]]; then
+    riverctl send-layout-cmd luatile "set_layout('$CHOICE')"
+  fi
+fi
