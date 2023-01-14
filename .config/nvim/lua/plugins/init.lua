@@ -1,266 +1,323 @@
-local present, packer = pcall(require, "plugins.packerInit")
+local M = { -- personal plugin
+	{ dir = "/home/luc/Projects/telescope-variables" },
 
-if not present then
-   return false
-end
+	{
+		dir = "/home/luc/Projects/myplugin",
+		wants = "telescope.nvim",
+		cmd = { "Boxes", "Figlet", "Pyfiglet", "Cowsay" },
+		config = function()
+			local make_cmd = require("myplugin").command_maker
+			local opts = {
+				hook_before = function(a, b)
+					-- print("before " .. a .. ", " .. b)
+					local api = require("Comment.api")
+					-- api.uncomment.linewise("j")
+					vim.cmd("normal! " .. a .. "ggv")
+					vim.cmd("normal! " .. b .. "ggv")
+					api.toggle.linewise(vim.fn.visualmode())
+				end,
+				hook_after = function(a, b)
+					print("after " .. a .. ", " .. b)
+					local api = require("Comment.api")
+					-- pcall(api.comment.linewise, "j")
+					vim.cmd("normal! " .. a .. "ggv")
+					vim.cmd("normal! " .. b .. "ggv")
+					api.comment.linewise(vim.fn.visualmode())
+				end,
+			}
+			opts = {}
+			make_cmd("Boxes", 'boxes -l | grep -P "(?s)^[^\\s-]\\S*$"', "boxes -m -d")
+			make_cmd("Figlet", "ls /usr/share/figlet/fonts/ | grep .flf | sed s/\\.flf$//", "figlet -f", opts)
+			make_cmd("Pyfiglet", "pyfiglet -l", "xargs pyfiglet -f", opts)
+			make_cmd("Cowsay", "cowsay -l | sed 1d | tr ' ' '\n'", "cowsay -f")
+		end,
+	},
 
-local use = packer.use
+	"JoseConseco/telescope_sessions_picker.nvim",
+	"b0o/SchemaStore.nvim",
+	"jose-elias-alvarez/typescript.nvim",
+	"MunifTanjim/nui.nvim",
+	"williamboman/mason-lspconfig.nvim",
+	"nvim-lua/plenary.nvim",
+	"windwp/nvim-spectre",
+	"folke/twilight.nvim",
+	"folke/which-key.nvim",
+	{
+		"jackMort/ChatGPT.nvim",
+		config = function()
+			require("chatgpt").setup({
+				-- optional configuration
+			})
+		end,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+	},
+	-- require("plugins.lsp"),
+	"nvim-treesitter/nvim-treesitter",
+	"jose-elias-alvarez/null-ls.nvim",
+	"morhetz/gruvbox",
+	{
+		"saecki/crates.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("crates").setup()
+			local cmp = require("cmp")
+			cmp.setup.buffer({ sources = { { name = "crates" } } })
+		end,
+	},
+	-- require("config/plugins/mason"),
 
-return packer.startup(function()
-   local plugin_settings = require("core.utils").load_config().plugins
+	{
+		enabled = true,
+		"smjonas/inc-rename.nvim",
+		cmd = "IncRename",
+		config = true,
+	},
 
-   -- FUNCTION: override_req, use `chadrc` plugin config override if present
-   -- name = name inside `default_config` / `chadrc`
-   -- default_req = run this if 'name' does not exist in `default_config` / `chadrc`
-   -- if override or default_req start with `(`, then strip that and assume override calls a function, not a whole file
-   local override_req = function(name, default_req)
-      local override = require("core.utils").load_config().plugins.default_plugin_config_replace[name]
-      local result
+	{
+		"folke/styler.nvim",
+		event = "VeryLazy",
+		config = {
+			themes = {
+				markdown = { colorscheme = "tokyonight-storm" },
+				help = { colorscheme = "oxocarbon", background = "dark" },
+				-- noice = { colorscheme = "gruvbox", background = "dark" },
+			},
+		},
+	},
 
-      if override == nil then
-         result = default_req
-      else
-         result = override
-      end
+	{
+		"folke/drop.nvim",
+		event = "VimEnter",
+		enabled = false,
+		config = function()
+			math.randomseed(os.time())
+			local theme = ({ "stars", "snow", "xmas" })[math.random(1, 3)]
+			require("drop").setup({ theme = theme })
+		end,
+	},
 
-      if string.match(result, "^%(") then
-         result = result:sub(2)
-         result = result:gsub("%)%.", "').", 1)
-         return "require('" .. result
-      else
-         return "require('" .. result .. "')"
-      end
-   end
+	{ "shaunsingh/oxocarbon.nvim", enabled = true },
 
-   -- this is arranged on the basis of when a plugin starts
+	{ "ellisonleao/gruvbox.nvim" },
 
-   -- this is the nvchad core repo containing utilities for some features like theme swticher, no need to lazy load
-   use {
-      "Nvchad/extensions",
-   }
+	{
+		"folke/paint.nvim",
+		enabled = false,
+		event = "BufReadPre",
+		config = function()
+			require("paint").setup({
+				highlights = {
+					{
+						filter = { filetype = "lua" },
+						pattern = "%s*%-%-%-%s*(@%w+)",
+						hl = "Constant",
+					},
+					{
+						filter = { filetype = "lua" },
+						pattern = "%s*%-%-%[%[(@%w+)",
+						hl = "Constant",
+					},
+					{
+						filter = { filetype = "lua" },
+						pattern = "%s*%-%-%-%s*@field%s+(%S+)",
+						hl = "@field",
+					},
+					{
+						filter = { filetype = "lua" },
+						pattern = "%s*%-%-%-%s*@class%s+(%S+)",
+						hl = "@variable.builtin",
+					},
+					{
+						filter = { filetype = "lua" },
+						pattern = "%s*%-%-%-%s*@alias%s+(%S+)",
+						hl = "@keyword",
+					},
+					{
+						filter = { filetype = "lua" },
+						pattern = "%s*%-%-%-%s*@param%s+(%S+)",
+						hl = "@parameter",
+					},
+				},
+			})
+		end,
+	},
 
-   use {
-      "nvim-lua/plenary.nvim",
-   }
+	{
+		"stevearc/dressing.nvim",
+		init = function()
+			---@diagnostic disable-next-line: duplicate-set-field
+			vim.ui.select = function(...)
+				require("lazy").load({ plugins = { "dressing.nvim" } })
+				return vim.ui.select(...)
+			end
+			---@diagnostic disable-next-line: duplicate-set-field
+			vim.ui.input = function(...)
+				require("lazy").load({ plugins = { "dressing.nvim" } })
+				return vim.ui.input(...)
+			end
+		end,
+	},
 
-   use {
-      "wbthomason/packer.nvim",
-      event = "VimEnter",
-   }
+	-- LSP
 
-   use {
-      "NvChad/nvim-base16.lua",
-      after = "packer.nvim",
-      config = function()
-         require("colors").init()
-      end,
-   }
+	{
+		"SmiteshP/nvim-navic",
+		config = function()
+			vim.g.navic_silence = true
+			require("nvim-navic").setup({ separator = " ", highlight = true, depth_limit = 5 })
+		end,
+	},
 
-   use {
-      "kyazdani42/nvim-web-devicons",
-      after = "nvim-base16.lua",
-      config = override_req("nvim_web_devicons", "plugins.configs.icons"),
-   }
+	{
+		"ThePrimeagen/refactoring.nvim",
+		keys = {
+			{
+				"<leader>r",
+				function()
+					require("refactoring").select_refactor()
+				end,
+				mode = "v",
+				noremap = true,
+				silent = true,
+				expr = false,
+			},
+		},
+		config = {},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
 
-   use {
-      "famiu/feline.nvim",
-      disable = not plugin_settings.status.feline,
-      after = "nvim-web-devicons",
-      config = override_req("feline", "plugins.configs.statusline"),
-   }
+	{
+		"simrat39/symbols-outline.nvim",
+		keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
+		cmd = "SymbolsOutline",
+		config = true,
+	},
 
-   use {
-      "akinsho/bufferline.nvim",
-      disable = not plugin_settings.status.bufferline,
-      after = "nvim-web-devicons",
-      config = override_req("bufferline", "plugins.configs.bufferline"),
-      setup = function()
-         require("core.mappings").bufferline()
-      end,
-   }
+	{
+		"danymat/neogen",
+		keys = {
+			{
+				"<leader>cc",
+				function()
+					require("neogen").generate({})
+				end,
+				desc = "Neogen Comment",
+			},
+		},
+		config = { snippet_engine = "luasnip" },
+	},
 
-   use {
-      "lukas-reineke/indent-blankline.nvim",
-      disable = not plugin_settings.status.blankline,
-      event = "BufRead",
-      config = override_req("indent_blankline", "(plugins.configs.others).blankline()"),
-   }
+	{
+		"m-demare/hlargs.nvim",
+		event = "VeryLazy",
+		enabled = false,
+		config = {
+			excluded_argnames = {
+				usages = {
+					lua = { "self", "use" },
+				},
+			},
+		},
+	},
 
-   use {
-      "norcalli/nvim-colorizer.lua",
-      disable = not plugin_settings.status.colorizer,
-      event = "BufRead",
-      config = override_req("nvim_colorizer", "(plugins.configs.others).colorizer()"),
-   }
+	-- Theme: icons
+	{
+		"nvim-tree/nvim-web-devicons",
+		config = { default = true },
+	},
 
-   use {
-      "nvim-treesitter/nvim-treesitter",
-      branch = "0.5-compat",
-      event = "BufRead",
-      config = override_req("nvim_treesitter", "plugins.configs.treesitter"),
-   }
+	{
+		"norcalli/nvim-terminal.lua",
+		ft = "terminal",
+		config = true,
+	},
 
-   -- git stuff
-   use {
-      "lewis6991/gitsigns.nvim",
-      disable = not plugin_settings.status.gitsigns,
-      opt = true,
-      config = override_req("gitsigns", "plugins.configs.gitsigns"),
-      setup = function()
-         require("core.utils").packer_lazy_load "gitsigns.nvim"
-      end,
-   }
+	{
+		"folke/trouble.nvim",
+		cmd = { "TroubleToggle", "Trouble" },
+		config = {
+			auto_open = false,
+			use_diagnostic_signs = true, -- en
+		},
+	},
 
-   -- lsp stuff
+	-- Persistence is a simple lua plugin for automated session management.
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		config = {
+			-- dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
+			dir = vim.fn.expand(vim.fn.stdpath("data") .. "/session/"), -- directory where session files are saved
+			options = { "buffers", "curdir", "tabpages", "winsize", "help" },
+		},
+	},
 
-   use {
-      "neovim/nvim-lspconfig",
-      opt = true,
-      setup = function()
-         require("core.utils").packer_lazy_load "nvim-lspconfig"
-         -- reload the current file so lsp actually starts for it
-         vim.defer_fn(function()
-            vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
-         end, 0)
-      end,
-      config = override_req("lspconfig", "plugins.configs.lspconfig"),
-   }
+	{
+		"Wansmer/treesj",
+		keys = {
+			{ "J", "<cmd>TSJToggle<cr>" },
+		},
+		config = { use_default_keymaps = false },
+	},
+	{
+		"cshuaimin/ssr.nvim",
+		keys = {
+			{
+				"<leader>cR",
+				function()
+					require("ssr").open()
+				end,
+				mode = { "n", "x" },
+				desc = "Structural Replace",
+			},
+		},
+	},
 
-   use {
-      "ray-x/lsp_signature.nvim",
-      disable = not plugin_settings.status.lspsignature,
-      after = "nvim-lspconfig",
-      config = override_req("signature", "(plugins.configs.others).signature()"),
-   }
+	{
+		"dstein64/vim-startuptime",
+		cmd = "StartupTime",
+		config = function()
+			vim.g.startuptime_tries = 10
+		end,
+	},
 
-   use {
-      "andymass/vim-matchup",
-      disable = not plugin_settings.status.vim_matchup,
-      opt = true,
-      setup = function()
-         require("core.utils").packer_lazy_load "vim-matchup"
-      end,
-   }
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		event = "BufReadPre",
+		config = true,
+	},
 
-   use {
-      "max397574/better-escape.nvim",
-      disable = not plugin_settings.status.esc_insertmode,
-      event = "InsertEnter",
-      config = override_req("better_escape", "(plugins.configs.others).better_escape()"),
-   }
+	{
+		"folke/zen-mode.nvim",
+		cmd = "ZenMode",
+		config = {
+			plugins = {
+				gitsigns = true,
+				tmux = true,
+				kitty = { enabled = false, font = "+2" },
+			},
+		},
+	},
 
-   -- load luasnips + cmp related in insert mode only
+	{
+		"andymass/vim-matchup",
+		event = "BufReadPost",
+		config = function()
+			vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+		end,
+	},
 
-   use {
-      "rafamadriz/friendly-snippets",
-      disable = not plugin_settings.status.cmp,
-      event = "InsertEnter",
-   }
+	{
+		"famiu/bufdelete.nvim",
+		cmd = { "Bdelete", "Bwipeout" },
+	},
+}
 
-   use {
-      "hrsh7th/nvim-cmp",
-      disable = not plugin_settings.status.cmp,
-      after = "friendly-snippets",
-      config = override_req("nvim_cmp", "plugins.configs.cmp"),
-   }
-
-   use {
-      "L3MON4D3/LuaSnip",
-      disable = not plugin_settings.status.cmp,
-      wants = "friendly-snippets",
-      after = "nvim-cmp",
-      config = override_req("luasnip", "(plugins.configs.others).luasnip()"),
-   }
-
-   use {
-      "saadparwaiz1/cmp_luasnip",
-      disable = not plugin_settings.status.cmp,
-      after = "LuaSnip",
-   }
-
-   use {
-      "hrsh7th/cmp-nvim-lua",
-      disable = not plugin_settings.status.cmp,
-      after = "cmp_luasnip",
-   }
-
-   use {
-      "hrsh7th/cmp-nvim-lsp",
-      disable = not plugin_settings.status.cmp,
-      after = "cmp-nvim-lua",
-   }
-
-   use {
-      "hrsh7th/cmp-buffer",
-      disable = not plugin_settings.status.cmp,
-      after = "cmp-nvim-lsp",
-   }
-
-   use {
-      "hrsh7th/cmp-path",
-      disable = not plugin_settings.status.cmp,
-      after = "cmp-buffer",
-   }
-   -- misc plugins
-   use {
-      "windwp/nvim-autopairs",
-      disable = not plugin_settings.status.autopairs,
-      after = plugin_settings.options.autopairs.loadAfter,
-      config = override_req("nvim_autopairs", "(plugins.configs.others).autopairs()"),
-   }
-
-   use {
-      "glepnir/dashboard-nvim",
-      disable = not plugin_settings.status.dashboard,
-      config = override_req("dashboard", "plugins.configs.dashboard"),
-      setup = function()
-         require("core.mappings").dashboard()
-      end,
-   }
-
-   use {
-      "terrortylor/nvim-comment",
-      disable = not plugin_settings.status.comment,
-      cmd = "CommentToggle",
-      config = override_req("nvim_comment", "(plugins.configs.others).comment()"),
-      setup = function()
-         require("core.mappings").comment()
-      end,
-   }
-
-   -- file managing , picker etc
-   use {
-      "kyazdani42/nvim-tree.lua",
-      disable = not plugin_settings.status.nvimtree,
-      cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-      config = override_req("nvim_tree", "plugins.configs.nvimtree"),
-      setup = function()
-         require("core.mappings").nvimtree()
-      end,
-   }
-
-   use {
-      "nvim-telescope/telescope.nvim",
-      module = "telescope",
-      cmd = "Telescope",
-      requires = {
-         {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            run = "make",
-         },
-         {
-            "nvim-telescope/telescope-media-files.nvim",
-            disable = not plugin_settings.status.telescope_media,
-            setup = function()
-               require("core.mappings").telescope_media()
-            end,
-         },
-      },
-      config = override_req("telescope", "plugins.configs.telescope"),
-      setup = function()
-         require("core.mappings").telescope()
-      end,
-   }
-
-   require("core.hooks").run("install_plugins", use)
-end)
+return M
