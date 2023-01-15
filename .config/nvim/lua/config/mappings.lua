@@ -25,6 +25,10 @@ for _, key in ipairs({ "h", "j", "k", "l" }) do
 				end,
 			})
 		else
+			local ft = vim.bo.filetype
+			if ft == "help" or ft == "man" or ft == "neo-tree" then
+				count = 0
+			end
 			count = count + 1
 			vim.defer_fn(function()
 				count = count - 1

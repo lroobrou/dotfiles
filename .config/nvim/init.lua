@@ -26,12 +26,9 @@ vim.cmd("colorscheme tokyonight-night")
 vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",
 	callback = function()
-		require("util").version()
+		-- require("util").version()
 		require("config.commands")
 		require("config.mappings")
 		require("config.options")
 	end,
 })
-
-vim.cmd("set number")
-vim.cmd("set relativenumber")
