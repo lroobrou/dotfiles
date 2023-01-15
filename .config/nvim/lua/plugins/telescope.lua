@@ -65,5 +65,6 @@ return {
 		})
 		telescope.load_extension("fzf")
 		telescope.load_extension("sessions_picker")
+		telescope.load_extension("variables")
 	end,
 }
