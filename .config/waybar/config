@@ -11,7 +11,7 @@
     "modules-right": [ "custom/updater", "pulseaudio", "cpu", "memory", "temperature", "backlight", "keyboard-state", "tray", "clock"],
 
     "custom/launcher":{
-        "format": "[ﲋ]",
+        "format": "[≈]",
         "on-click": "jgmenu_run &"
     },
 

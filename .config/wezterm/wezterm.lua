@@ -1,9 +1,9 @@
---                        __                    
---   _      _____  ____  / /____  _________ ___ 
+--                        __
+--   _      _____  ____  / /____  _________ ___
 --  | | /| / / _ \/_  / / __/ _ \/ ___/ __ `__ \
 --  | |/ |/ /  __/ / /_/ /_/  __/ /  / / / / / /
---  |__/|__/\___/ /___/\__/\___/_/  /_/ /_/ /_/ 
---                                              
+--  |__/|__/\___/ /___/\__/\___/_/  /_/ /_/ /_/
+--
 local wezterm = require("wezterm")
 local act = wezterm.action
 
@@ -238,6 +238,7 @@ return {
 	-- /_/|_|\___/\__, /_/ /_/ /_/\__,_/ .___/____/
 	--           /____/               /_/
 	--
+	disable_default_key_bindings = true,
 	leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 },
 	keys = {
 		{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
@@ -338,6 +339,9 @@ return {
 		{ key = "|", mods = "SHIFT|LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 		{ key = "}", mods = "SHIFT|SUPER", action = act.ActivateTabRelative(1) },
 		{ key = "phys:Space", mods = "SHIFT|CTRL", action = act.QuickSelect },
+		{ key = "phys:Space", mods = "SHIFT", action = act.SendString(" ") },
+		{ key = "phys:Backspace", mods = "SHIFT", action = act.SendString("\x08") },
+		{ key = "phys:Delete", mods = "SHIFT", action = act.SendKey({ key = "Delete" }) },
 		{ key = "PageUp", mods = "SHIFT", action = act.ScrollByPage(-1) },
 		{ key = "PageUp", mods = "CTRL", action = act.ActivateTabRelative(-1) },
 		{ key = "PageUp", mods = "SHIFT|CTRL", action = act.MoveTabRelative(-1) },

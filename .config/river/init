@@ -32,16 +32,23 @@ pgrep -u "$USER" dunst || dunst &
 pgrep -u "$USER" mpd || mpd &
 pgrep -u "$USER" mpd-mpris || mpd-mpris &
 
+# save and restore volume
+save_volume="pamixer --get-volume >| $HOME/.current-volume"
+rest_volume="pamixer --set-volume \$(cat $HOME/.current-volume)"
+
 # idle management
 # https://github.com/adrusi/dotfiles/blob/9ee65f91050d39d4e790a2ad91faa4f912ddd4f9/swayidle/.local/bin/swayidle-runtime
+# idea: should reset the volume after going back to gdm
+# get volume: pamixer --get-volume > current-volume
+# pamixer --set-volume $(cat current-volume)
 inhibit="/home/luc/.config/river/swayidle-inhibit"
 lockscreen="swaylock -i \"$BACKGROUND\""
 pgrep -u "$USER" swayidle || swayidle \
 	timeout 200 "$inhibit --video || brightnessctl --save set 20%" \
     resume "$inhibit --video || brightnessctl --restore" \
-	timeout 420 "$inhibit || { gdmflexiserver -s; $lockscreen; }" \
-	lock "gdmflexiserver -s; $lockscreen;" \
-	unlock "pkill -u $USER swaylock; brightnessctl --restore ;" &
+	timeout 420 "$inhibit || { $save_volume; gdmflexiserver -s; $lockscreen; }" \
+	lock "$save_volume; gdmflexiserver -s; $lockscreen;" \
+	unlock "pkill -u $USER swaylock; brightnessctl --restore ; $rest_volume" &
 
 pgrep -u "$USER" swaybg || swaybg -i "$BACKGROUND" &
 pgrep -u "$USER" waybar || waybar &
@@ -237,7 +244,7 @@ if [ "$TILER" = "luatile" ]; then
 	riverctl map normal Super L send-layout-cmd "$TILER" "increase_ratio(0.05)"
 	riverctl map normal Super+Shift Space send-layout-cmd "$TILER" "cycle_layouts()"
 	riverctl map normal Super M send-layout-cmd "$TILER" "toggle_monocle()"
-	riverctl map normal Super+Shift L spawn 'gdmflexiserver -s; swaylock'
+	riverctl map normal Super+Shift L spawn "gdmflexiserver -s; $lockscreen"
 
 	riverctl map normal Super W send-layout-cmd "$TILER" "increase_window_gap(5)"
 	riverctl map normal Super+Shift W send-layout-cmd "$TILER" "increase_window_gap(-5)"

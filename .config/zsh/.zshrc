@@ -164,10 +164,17 @@ alias d='dirs -v' # show the directory stack
 alias df="df -h"
 alias ta="tmux attach"
 alias jo="joshuto"
+alias lg="lazygit"
+if [ ! $(command -v hx) ]; then
+  alias hx="helix"
+fi
+alias lgconfig="lg --git-dir=$HOME/.cfg --work-tree=$HOME"
+alias lgy="lg --git-dir=$HOME/.local/share/yadm/repo.git/ --work-tree=$HOME"
 
 # alternative vim configs
 alias nvimc="XDG_CONFIG_HOME=~/nvim-config XDG_DATA_HOME=~/nvim-config/share nvim"
 alias nvchad="XDG_CONFIG_HOME=~/nvchad XDG_DATA_HOME=~/nvchad/share nvim"
+alias nvlazy="XDG_CONFIG_HOME=~/nvlazy XDG_DATA_HOME=~/nvlazy/share nvim"
 # alias nvim="XDG_CONFIG_HOME=~/nvchad XDG_DATA_HOME=~/nvchad/share nvim"
 
 # https://www.atlassian.com/git/tutorials/dotfiles
