@@ -146,6 +146,9 @@ local M = { -- personal plugin
 		end,
 	},
 
+	-- With the release of Neovim 0.6 we were given the start of extensible core UI hooks (vim.ui.select and vim.ui.input). They exist to allow plugin authors to override them with improvements upon the default behavior, so that's exactly what we're going to do.
+	--
+	-- It is a goal to match and not extend the core Neovim API. All options that core respects will be respected, and we will not accept any custom parameters or options in the functions. Customization will be done entirely using a separate configuration method.
 	{
 		"stevearc/dressing.nvim",
 		init = function()
@@ -163,7 +166,6 @@ local M = { -- personal plugin
 	},
 
 	-- LSP
-
 	{
 		"SmiteshP/nvim-navic",
 		config = function()
@@ -214,6 +216,7 @@ local M = { -- personal plugin
 		config = { snippet_engine = "luasnip" },
 	},
 
+	-- Highlight arguments' definitions and usages, asynchronously, using Treesitter
 	{
 		"m-demare/hlargs.nvim",
 		event = "VeryLazy",
@@ -233,6 +236,7 @@ local M = { -- personal plugin
 		config = { default = true },
 	},
 
+	-- A high performance filetype mode for Neovim which leverages conceal and highlights your buffer with the correct color codes.
 	{
 		"norcalli/nvim-terminal.lua",
 		ft = "terminal",
@@ -259,13 +263,7 @@ local M = { -- personal plugin
 		},
 	},
 
-	{
-		"Wansmer/treesj",
-		keys = {
-			{ "J", "<cmd>TSJToggle<cr>" },
-		},
-		config = { use_default_keymaps = false },
-	},
+	-- Structural search and replace for Neovim.
 	{
 		"cshuaimin/ssr.nvim",
 		keys = {
@@ -288,10 +286,100 @@ local M = { -- personal plugin
 		end,
 	},
 
+	-- Lightweight alternative to context.vim implemented with nvim-treesitter.
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		event = "BufReadPre",
-		config = true,
+		-- config = true,
+		config = {
+			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+			max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+			trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+			patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+				-- For all filetypes
+				-- Note that setting an entry here replaces all other patterns for this entry.
+				-- By setting the 'default' entry below, you can control which nodes you want to
+				-- appear in the context window.
+				default = {
+					"class",
+					"function",
+					"method",
+					"for",
+					"while",
+					"if",
+					"switch",
+					"case",
+					"interface",
+					"struct",
+					"enum",
+				},
+				-- Patterns for specific filetypes
+				-- If a pattern is missing, *open a PR* so everyone can benefit.
+				tex = {
+					"chapter",
+					"section",
+					"subsection",
+					"subsubsection",
+				},
+				haskell = {
+					"adt",
+				},
+				rust = {
+					"impl_item",
+				},
+				terraform = {
+					"block",
+					"object_elem",
+					"attribute",
+				},
+				scala = {
+					"object_definition",
+				},
+				vhdl = {
+					"process_statement",
+					"architecture_body",
+					"entity_declaration",
+				},
+				markdown = {
+					"section",
+				},
+				elixir = {
+					"anonymous_function",
+					"arguments",
+					"block",
+					"do_block",
+					"list",
+					"map",
+					"tuple",
+					"quoted_content",
+				},
+				json = {
+					"pair",
+				},
+				typescript = {
+					"export_statement",
+				},
+				yaml = {
+					"block_mapping_pair",
+				},
+			},
+			exact_patterns = {
+				-- Example for a specific filetype with Lua patterns
+				-- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
+				-- exactly match "impl_item" only)
+				-- rust = true,
+			},
+
+			-- [!] The options below are exposed but shouldn't require your attention,
+			--     you can safely ignore them.
+
+			zindex = 20, -- The Z-index of the context window
+			mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+			-- Separator between context and content. Should be a single character string, like '-'.
+			-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+			separator = nil,
+		},
 	},
 
 	{
@@ -306,6 +394,8 @@ local M = { -- personal plugin
 		},
 	},
 
+	-- match-up is a plugin that lets you highlight, navigate, and operate on sets of matching text.
+	-- It extends vim's % key to language-specific words instead of just single characters.
 	{
 		"andymass/vim-matchup",
 		event = "BufReadPost",
@@ -314,6 +404,9 @@ local M = { -- personal plugin
 		end,
 	},
 
+	-- Neovim's default :bdelete command can be quite annoying, since it also messes up your entire
+	-- window layout by deleting windows. bufdelete.nvim aims to fix that by providing useful commands
+	-- that allow you to delete a buffer without messing up your window layout.
 	{
 		"famiu/bufdelete.nvim",
 		cmd = { "Bdelete", "Bwipeout" },
