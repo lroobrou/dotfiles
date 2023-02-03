@@ -109,6 +109,12 @@ function M.config(options)
 				require("plugins.lsp.formatting").setup(client, bufnr)
 				require("plugins.lsp.keys").setup(client, bufnr)
 			end,
+			cmd = {
+				"rustup",
+				"run",
+				"stable",
+				"rust-analyzer",
+			},
 		}, -- rust-analyzer options
 
 		-- debugging stuff

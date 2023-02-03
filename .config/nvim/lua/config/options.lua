@@ -22,6 +22,16 @@ vim.opt.ignorecase = true -- Ignore case
 vim.opt.inccommand = "nosplit" -- preview incremental substitute
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.list = true -- Show some invisible characters (tabs...
+vim.opt.listchars = {
+	tab = ">→",
+	-- lead = "·",
+	trail = "·",
+	extends = "›",
+	precedes = "‹",
+	nbsp = "␣",
+	-- eol = "↲",
+}
+
 vim.opt.mouse = "a" -- enable mouse mode
 vim.opt.number = true -- Print line number
 vim.opt.pumblend = 10 -- Popup blend

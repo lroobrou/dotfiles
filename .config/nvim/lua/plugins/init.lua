@@ -43,6 +43,7 @@ local M = { -- personal plugin
 	"folke/twilight.nvim",
 	"folke/which-key.nvim",
 	{
+		cmd = { "ChatGTP" },
 		"jackMort/ChatGPT.nvim",
 		config = function()
 			require("chatgpt").setup({
@@ -62,6 +63,7 @@ local M = { -- personal plugin
 	{
 		"saecki/crates.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		ft = "toml",
 		config = function()
 			require("crates").setup()
 			local cmp = require("cmp")
