@@ -147,9 +147,13 @@ EDITOR=nvim
 # | Aliases |
 # +---------+
 
+alias l="ls -F --color=auto"
+alias ll="ls -l -F --color=auto"
+alias la="ls -la -F --color=auto"
 if command -v exa > /dev/null; then
     alias ls="exa"
-    alias l="exa -l"
+    alias l="exa"
+    alias ll="exa -l"
     alias la="exa -la"
 fi
 alias cd..="cd .."
