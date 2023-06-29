@@ -1,95 +1,37 @@
 #!/bin/sh
-echo "switch-to-workspace-1 "['<Super>1']""
+
+echo "Setting GNOME key bindings."
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1']"
-
-echo "switch-to-workspace-2 "['<Super>2']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['<Super>2']"
-
-echo "switch-to-workspace-3 "['<Super>3']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-3 "['<Super>3']"
-
-echo "switch-to-workspace-4 "['<Super>4']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-4 "['<Super>4']"
-
-echo "switch-to-workspace-5 "['<Super>5']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-5 "['<Super>5']"
-
-echo "switch-to-workspace-6 "['<Super>6']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-6 "['<Super>6']"
-
-echo "switch-to-workspace-7 "['<Super>7']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-7 "['<Super>7']"
-
-echo "switch-to-workspace-8 "['<Super>8']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-8 "['<Super>8']"
-
-echo "switch-to-workspace-9 "['<Super>9']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-9 "['<Super>9']"
-
-echo "switch-to-workspace-10 "['<Super>0']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-10 "['<Super>0']"
-
-echo "move-to-workspace-1 "['<Super><Shift>1']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-1 "['<Super><Shift>1']"
-
-echo "move-to-workspace-2 "['<Super><Shift>2']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-2 "['<Super><Shift>2']"
-
-echo "move-to-workspace-3 "['<Super><Shift>3']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-3 "['<Super><Shift>3']"
-
-echo "move-to-workspace-4 "['<Super><Shift>4']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-4 "['<Super><Shift>4']"
-
-echo "move-to-workspace-5 "['<Super><Shift>5']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-5 "['<Super><Shift>5']"
-
-echo "move-to-workspace-6 "['<Super><Shift>6']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-6 "['<Super><Shift>6']"
-
-echo "move-to-workspace-7 "['<Super><Shift>7']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-7 "['<Super><Shift>7']"
-
-echo "move-to-workspace-8 "['<Super><Shift>8']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-8 "['<Super><Shift>8']"
-
-echo "move-to-workspace-9 "['<Super><Shift>9']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-9 "['<Super><Shift>9']"
-
-echo "move-to-workspace-10 "['<Super><Shift>0']""
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10 "['<Super><Shift>0']"
-
-
-echo "switch-to-workspace-left ['<Super>Page_Up', '<Super><Alt>Left', '<Control><Alt>Left', '<Super>Comma']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Super>Page_Up', '<Super><Alt>Left', '<Control><Alt>Left', '<Super>Comma']"
-
-echo "switch-to-workspace-right "['<Super>Page_Down', '<Super><Alt>Right', '<Control><Alt>Right', '<Super>Period']""
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Super>Page_Down', '<Super><Alt>Right', '<Control><Alt>Right', '<Super>Period']"
-
 # alt-tab switches windows i.o. applications
-echo "switch-applications "['<Alt>Tab']""
 gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
-
-echo "switch-applications-backward "['<Alt><Shift>Tab']""
 gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Alt><Shift>Tab']"
-
-echo "switch-windows "['<Super>Tab']""
 gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab']"
-
-echo "switch-windows-backward  "['<Super><Shift>Tab']""
 gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward  "['<Super><Shift>Tab']"
-
-echo "current-workspace-only false"
-gsettings set org.gnome.shell.window-switcher current-workspace-only false
-
-echo "show-desktop "['<Super>d']""
 gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-
-echo "close "['<Alt>F4', '<Super>q']""
 gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4', '<Super>q']"
-
-echo "toggle-fullscreen "['<Super>f']""
 gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Super>f']"
 
-
+echo "Setting GNOME settings."
+gsettings set org.gnome.shell.window-switcher current-workspace-only false
 gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
