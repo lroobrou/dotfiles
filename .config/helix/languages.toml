@@ -1,0 +1,15 @@
+[language-server.rune-language-server]
+command = "/home/luc/Projects/xxx/target/debug/xxx"
+args = ["--rune-lsp"]
+
+[[grammar]]
+name = "rune"
+source = { git = "/home/luc/Projects/tree-sitter-rune", rev = "63bd19bea9ddc2aedffe9c85e81444f4516edacc" }
+
+[[language]]
+name = "rune"
+scope = "source.rune"
+file-types = ["rn"]
+roots = []
+language-servers = [ "rune-language-server" ]
+grammar = "rune"
