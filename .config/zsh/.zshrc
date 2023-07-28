@@ -81,6 +81,17 @@ case :$PATH: in
       ;;
 esac
 
+case :$PATH: in
+  *:$HOME/.local/bin:*)
+      # echo "cargo bin already in path"
+      ;;  # do nothing
+  *) 
+      # echo "cargo bin is not in the path" 
+      export PATH="$HOME/.local/bin:$PATH"
+      ;;
+esac
+
+
 # Add macports path to the front
 if [[ `uname` == "Darwin" ]]; then
       export PATH="/opt/local/bin:$PATH"
