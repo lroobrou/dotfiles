@@ -196,6 +196,7 @@ bindkey -e
 # zsource_ifexists /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.zsh
 
 export ZVM_NORMAL_MODE_CURSOR=bbl
+export COLORTERM=truecolor
 
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
