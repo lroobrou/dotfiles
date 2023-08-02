@@ -158,6 +158,7 @@ EDITOR=nvim
 # | Aliases |
 # +---------+
 
+alias ls="ls --color=auto"
 alias l="ls -F --color=auto"
 alias ll="ls -l -F --color=auto"
 alias la="ls -la -F --color=auto"
